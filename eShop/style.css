@@ -15,7 +15,7 @@ header {
 
 .goods-list {
     display: flex; 
-    justify-content: space-between; 
+    justify-content: space-around; 
     padding-top: 20px;
 }
 
@@ -27,4 +27,10 @@ header {
     border-radius: 10px; 
     display: flex; 
     flex-direction: column;
+}
+
+.basket-list{
+    display: flex; 
+    justify-content: space-around; 
+    padding-top: 20px;
 }
