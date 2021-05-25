@@ -36,13 +36,13 @@ class GoodsItem {
   render() {
     let data = {
       id_product: this.id_product,
-      "price": this.price,
-      "product_name": this.product_name,
+      price: this.price,
+      product_name: this.product_name,
     };
 
     data = JSON.stringify(data);
 
-    return `<div class="goods-item">
+    return `<div class='goods-item'>
       <h3>${this.product_name}</h3>
       <p>${this.price}</p>
       <button data-product='${data}' id='add-btn-${this.id_product}'>В корзину</button>
@@ -90,10 +90,10 @@ class BasketItem extends GoodsItem {
   remove() { }
 
   render() {
-    return `<div class="goods-item">
+    return `<div class='goods-item'>
       <h3>${this.product_name}</h3>
       <p>${this.price}</p>
-      <button id='remove-btn-${this.id_product}'>Удалить из корзины</button>
+      <button data-id='${this.id_product}' id='remove-btn-${this.id_product}'>Удалить из корзины</button>
     </div>`;
   }
 }
@@ -109,15 +109,16 @@ class BasketList {
     this.render();
   }
 
-  setAddListener(list = [{ id_product: 123 }, { id_product: 456 }]) {
+  setAddListener(list) {
     list.forEach((item) => {
       document.getElementById(`add-btn-${item.id_product}`).addEventListener('click', (e) => this.addItem(e));
     })
   }
 
   removeItem({ target }) {
+    console.log(target.dataset);
     const { id } = target.dataset;
-    this.goods = this.goods.filter((item) => String(item.id_product) !== String(id));
+    this.goods = this.goods.filter((item) => item.id_product !== parseInt(id));
     this.render();
   }
 
