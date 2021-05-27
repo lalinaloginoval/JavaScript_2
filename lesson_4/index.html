@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Форма обратной связи</title>
+</head>
+
+<body>
+    <div>
+        <h1> Форма обратной связи </h1>
+        <form name="formRegister" class="form" onsubmit="return formValidate(event)">
+
+            <label for="name" class="text_from">Имя</label>
+            <input id="name" class="input" type="text" placeholder="Ваше имя">
+            <span class="error-text"></span>
+
+            <label for="email" class="text_from">Email</label><br>
+            <input id="email" class="input" type="email" placeholder="Ваш эл. адрес">
+            <span class="error-text"></span>
+
+            <label for="phone" class="text_from">Телефон</label><br>
+            <input id="phone" class="input" type="phone" placeholder="Ваш телефон">
+            <span class="error-text"></span>
+
+            <label class="text_from">Комментарий</label>
+            <textarea class="input" cols="30" rows="5" placeholder="Комментарий..."></textarea>
+
+            <button class="button" type="submit">Отправить</button>
+        </form>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
