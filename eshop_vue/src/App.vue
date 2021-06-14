@@ -2,9 +2,13 @@
   <div id="app">
     <Header @show-basket="showBasket" @filtered-goods="getFilteredGoods" />
     <main>
-      <GoodsList :goods="filteredGoods" />
+      <GoodsList @add-to-cart="addToCart" :goods="filteredGoods" />
       <hr />
-      <Basket :isVisibleCart="isVisibleCart" />
+      <Basket
+        @remove-to-cart="removeFromCart"
+        :basketGoods="basketGoods"
+        :isVisibleCart="isVisibleCart"
+      />
     </main>
   </div>
 </template>
@@ -14,8 +18,7 @@ import GoodsList from "./components/GoodsList";
 import Header from "./components/Header";
 import Basket from "./components/Basket";
 
-const API_URL =
-  "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses";
+const API_URL = "http://localhost:3000";
 
 export default {
   components: {
@@ -25,20 +28,47 @@ export default {
   },
   data: () => ({
     goods: [],
+    basketGoods: [],
     filteredGoods: [],
     isVisibleCart: false,
   }),
   mounted() {
-    this.makeGETRequest(`${API_URL}/catalogData.json`);
+    this.getGoods();
+    this.getCart();
   },
   methods: {
+    addToCart(item) {
+      this.makePOSTRequest(`${API_URL}/addToCart`, item).then(() =>
+        this.getCart()
+      );
+    },
+    removeFromCart(item) {
+      this.makePOSTRequest(`${API_URL}/removeFromCart`, item).then(() =>
+        this.getCart()
+      );
+    },
     makeGETRequest(url) {
-      fetch(url)
-        .then((data) => data.json())
-        .then((data) => {
-          this.goods = data;
-          this.filteredGoods = data;
-        });
+      return fetch(url).then((data) => data.json());
+    },
+    makePOSTRequest(url, data) {
+      return fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }).then((data) => data.json());
+    },
+    getGoods() {
+      this.makeGETRequest(`${API_URL}/catalogData`).then((data) => {
+        this.goods = data;
+        this.filteredGoods = data;
+      });
+    },
+    getCart() {
+      this.makeGETRequest(`${API_URL}/cartData`).then((data) => {
+        this.basketGoods = data;
+      });
     },
     getFilteredGoods(value) {
       const regexp = new RegExp(value, "i");

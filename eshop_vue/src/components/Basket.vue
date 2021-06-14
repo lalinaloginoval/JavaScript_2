@@ -29,6 +29,11 @@ export default {
       default: () => [],
     },
   },
+  methods: {
+    removeItem(item) {
+      this.$emit("remove-to-cart", item);
+    },
+  },
 };
 </script>
 
